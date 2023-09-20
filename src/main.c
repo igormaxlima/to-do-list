@@ -14,7 +14,8 @@ void exibir_creditos()
 
 void exibirGerenciarTarefas()
 {
-  gerenciarTarefas();
+  term_cls();
+  menuGerenciarTarefas();
   getchar();
 }
 
