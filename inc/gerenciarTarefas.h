@@ -29,6 +29,9 @@ typedef struct
   unsigned int size;
 } ListaTarefa;
 
+ListaTarefa lista;
+
+ListaTarefa inicializarLista();
 void menuGerenciarTarefas();
 void inserirFim(ListaTarefa lista, Tarefa tarefa);
 

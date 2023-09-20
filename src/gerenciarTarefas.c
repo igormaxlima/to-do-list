@@ -3,7 +3,12 @@
 #include "gerenciarTarefas.h"
 #include "term.h"
 
-ListaTarefa lista;
+ListaTarefa inicializarLista()
+{
+  lista.primeiro = NULL;
+  lista.ultimo = NULL;
+  lista.size = 0;
+}
 
 void menuGerenciarTarefas()
 {

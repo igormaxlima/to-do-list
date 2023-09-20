@@ -5,7 +5,7 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 
-int console_cols, console_rows;
+extern int console_cols, console_rows;
 
 #define TC_RST "\x1B[0m"
 #define TC_BLK "\x1B[1;30m"
