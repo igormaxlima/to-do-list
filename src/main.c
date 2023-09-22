@@ -9,6 +9,7 @@ void exibir_creditos()
   term_move_xy(1, 1);
   printf("CRÉDITOS\n");
   printf("Professor Daniel - IDP\n");
+  printf("Alunos: Igor Max, Pedro Nasser, Brenno Lopes, João Gabriel Macedo");
   getchar();
 }
 
