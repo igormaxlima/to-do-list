@@ -29,9 +29,11 @@ typedef struct
   unsigned int size;
 } ListaTarefa;
 
-ListaTarefa lista;
-
 ListaTarefa inicializarLista();
+void criarNovaTarefa();
+NoTarefa *criarNo(Tarefa tarefa);
+Tarefa inicializarTarefa(int id, ETarefa status, char *titulo);
+void exibeTarefas(ListaTarefa lista);
 void menuGerenciarTarefas();
 void inserirFim(ListaTarefa lista, Tarefa tarefa);
 
