@@ -3,25 +3,7 @@
 #include <string.h>
 #include "gerenciarTarefas.h"
 #include "term.h"
-
-ListaTarefa lista;
-
-ListaTarefa inicializarLista()
-{
-  lista.primeiro = NULL;
-  lista.ultimo = NULL;
-  lista.size = 0;
-  return lista;
-}
-
-Tarefa inicializarTarefa(int id, ETarefa status, char *titulo)
-{
-  Tarefa tarefa;
-  tarefa.id = id;
-  tarefa.status = status;
-  strcpy(tarefa.titulo, titulo);
-  return tarefa;
-}
+#include "tarefas.h"
 
 void criarNovaTarefa(ListaTarefa *lista)
 {
@@ -126,18 +108,6 @@ void exibirLista(ListaTarefa *lista)
   printf("\n");
 }
 
-NoTarefa *criarNo(Tarefa tarefa)
-{
-  NoTarefa *novo_no = malloc(sizeof(NoTarefa));
-  if (novo_no)
-  {
-    novo_no->anterior = NULL;
-    novo_no->proximo = NULL;
-    novo_no->tarefa = tarefa;
-  }
-  return novo_no;
-}
-
 void menuGerenciarTarefas()
 {
   char ch;
@@ -171,9 +141,4 @@ void menuGerenciarTarefas()
       // default: opção ínválida
     }
   }
-}
-
-void inserirFim(ListaTarefa lista, Tarefa tarefa)
-{
-  return;
 }
