@@ -108,6 +108,69 @@ void exibirLista(ListaTarefa *lista)
   printf("\n");
 }
 
+void deletarTarefa(ListaTarefa *lista)
+{
+  if (!lista->primeiro)
+  {
+    printf("Não tem como deletar uma tarefa, sua lista está vazia.\n");
+
+    return;
+  }
+  else
+  {
+    char ch;
+    while (1)
+    {
+      printf("%s%s", TC_BG_WHT, TC_BLK);
+      term_cls();
+      term_move_xy(1, 1);
+      printf("\nQual destas tarefas você deseja deletar:\n");
+      exibirLista(lista);
+      printf("Q - Sair\n");
+      printf("->");
+      tc_canon_on();
+      int idDeletar;
+      scanf("%d", &idDeletar);
+      tc_canon_off();
+      printf("Opção: ");
+      ch = getchar();
+      if (ch == 'q' || ch == 'Q')
+        break;
+      NoTarefa *aux = lista->primeiro;
+      while (aux && idDeletar != aux->tarefa.id)
+      {
+        aux = aux->proximo;
+      }
+
+      if (!aux)
+      {
+        printf("\nEssa Tarefa nao Existe!\n");
+        return;
+      }
+      else if (aux == lista->primeiro)
+      {
+        lista->primeiro = aux->proximo;
+        free(aux);
+        lista->size--;
+      }
+      else if (aux == lista->ultimo)
+      {
+        aux->anterior->proximo = NULL;
+        lista->ultimo = aux->anterior;
+        free(aux);
+        lista->size--;
+      }
+      else
+      {
+        aux->anterior->proximo = aux->proximo;
+        aux->proximo->anterior = aux->anterior;
+        free(aux);
+        lista->size--;
+      }
+    }
+  }
+}
+
 void menuGerenciarTarefas()
 {
   char ch;
@@ -136,7 +199,7 @@ void menuGerenciarTarefas()
       // Editar tarefa
       break;
     case '3':
-      // Deletar tarefa
+      deletarTarefa(&lista);
       break;
       // default: opção ínválida
     }

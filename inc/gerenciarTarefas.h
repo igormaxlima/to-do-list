@@ -4,6 +4,7 @@
 
 void criarNovaTarefa();
 void exibeTarefas(ListaTarefa *lista);
+void deletarTarefa(ListaTarefa *lista);
 void menuGerenciarTarefas();
 
 #endif
