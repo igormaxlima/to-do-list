@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "gerenciarTarefas.h"
 #include "term.h"
 #include "tarefas.h"
@@ -112,8 +113,10 @@ void deletarTarefa(ListaTarefa *lista)
 {
   if (!lista->primeiro)
   {
+    term_cls();
+    term_move_xy(1, 1);
     printf("Não tem como deletar uma tarefa, sua lista está vazia.\n");
-
+    sleep(2);
     return;
   }
   else
@@ -144,14 +147,22 @@ void deletarTarefa(ListaTarefa *lista)
 
       if (!aux)
       {
+        term_cls();
+        term_move_xy(1, 1);
         printf("\nEssa Tarefa nao Existe!\n");
-        return;
+        sleep(2);
       }
       else if (aux == lista->primeiro)
       {
         lista->primeiro = aux->proximo;
         free(aux);
         lista->size--;
+        NoTarefa *atual = lista->primeiro;
+        while (atual)
+        {
+          atual->tarefa.id--;
+          atual = atual->proximo;
+        }
       }
       else if (aux == lista->ultimo)
       {
@@ -162,10 +173,25 @@ void deletarTarefa(ListaTarefa *lista)
       }
       else
       {
+        NoTarefa *atual = aux->proximo;
         aux->anterior->proximo = aux->proximo;
         aux->proximo->anterior = aux->anterior;
         free(aux);
         lista->size--;
+        while (atual)
+        {
+          atual->tarefa.id--;
+          atual = atual->proximo;
+        }
+      }
+
+      if (aux)
+      {
+        term_cls();
+        term_move_xy(1, 1);
+        printf("\nTarefa Deletada com Sucesso!\n");
+        sleep(1);
+        return;
       }
     }
   }
