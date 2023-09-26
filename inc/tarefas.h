@@ -29,7 +29,7 @@ typedef struct
   unsigned int size;
 } ListaTarefa;
 
-ListaTarefa lista;
+extern ListaTarefa lista;
 
 ListaTarefa inicializarLista();
 Tarefa inicializarTarefa(int id, ETarefa status, char *titulo);

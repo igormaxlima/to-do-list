@@ -192,10 +192,14 @@ void editarTarefa(ListaTarefa *lista)
             {
             case '1':
               aux->tarefa.status = ANDAMENTO;
+              break;
             case '2':
               aux->tarefa.status = FINALIZADO;
-            default:
               break;
+            default:
+              printf("\nStatus nao existente\n");
+              sleep(1);
+              return;
             }
           }
           else if (aux->tarefa.status == ANDAMENTO)
@@ -209,13 +213,17 @@ void editarTarefa(ListaTarefa *lista)
             {
             case '1':
               aux->tarefa.status = A_FAZER;
+              break;
             case '2':
               aux->tarefa.status = FINALIZADO;
-            default:
               break;
+            default:
+              printf("\nStatus nao existente\n");
+              sleep(1);
+              return;
             }
           }
-          else
+          else if (aux->tarefa.status == FINALIZADO)
           {
             printf("1. A Fazer\n");
             printf("2. Em Andamento\n");
@@ -226,14 +234,44 @@ void editarTarefa(ListaTarefa *lista)
             {
             case '1':
               aux->tarefa.status = A_FAZER;
+              break;
             case '2':
               aux->tarefa.status = ANDAMENTO;
-            default:
               break;
+            default:
+              printf("\nStatus nao existente\n");
+              sleep(1);
+              return;
             }
-          }
-        default:
+          } else {
+            printf("1. A Fazer\n");
+            printf("2. Em Andamento\n");
+            printf("3. Finalizada\n");
+            printf("-> ");
+            char ch;
+            ch = getchar();
+            switch (ch)
+            {
+            case '1':
+              aux->tarefa.status = A_FAZER;
+              break;
+            case '2':
+              aux->tarefa.status = ANDAMENTO;
+              break;
+            case '3': 
+              aux->tarefa.status = FINALIZADO;
+              break;  
+            default:
+              printf("\nStatus nao existente\n");
+              sleep(1);
+              return;
+            }
+           }
           break;
+        default:
+          printf("\nOpção não existente!\n");
+          sleep(1);
+          return;
         }
         if (aux)
         {
