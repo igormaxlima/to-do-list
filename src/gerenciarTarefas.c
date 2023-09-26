@@ -109,6 +109,145 @@ void exibirLista(ListaTarefa *lista)
   printf("\n");
 }
 
+void editarTarefa(ListaTarefa *lista)
+{
+  if (!lista->primeiro)
+  {
+    term_cls();
+    term_move_xy(1, 1);
+    printf("Não tem como editar nenhuma tarefa, sua lista está vazia.\n");
+    sleep(2);
+    return;
+  }
+  else
+  {
+    char ch;
+    while (1)
+    {
+      printf("%s%s", TC_BG_WHT, TC_BLK);
+      term_cls();
+      term_move_xy(1, 1);
+      printf("\nQual destas tarefas você deseja editar:\n");
+      exibirLista(lista);
+      printf("Q - Sair\n");
+      printf("->");
+      tc_canon_on();
+      int idEditar;
+      scanf("%d", &idEditar);
+      tc_canon_off();
+      printf("Opção: ");
+      ch = getchar();
+      if (ch == 'q' || ch == 'Q')
+        break;
+      NoTarefa *aux = lista->primeiro;
+      while (aux && idEditar != aux->tarefa.id)
+      {
+        aux = aux->proximo;
+      }
+
+      if (!aux)
+      {
+        term_cls();
+        term_move_xy(1, 1);
+        printf("Essa Tarefa nao Existe!\n");
+        sleep(2);
+      }
+      else
+      {
+        printf("%s%s", TC_BG_WHT, TC_BLK);
+        term_cls();
+        term_move_xy(1, 1);
+        printf("O que você deseja editar nessa tarefa:\n");
+        printf("1. Titulo\n");
+        printf("2. Status\n");
+        printf("-> ");
+        ch = getchar();
+        switch (ch)
+        {
+        case '1':
+          printf("%s%s", TC_BG_WHT, TC_BLK);
+          term_cls();
+          term_move_xy(1, 1);
+          printf("Insira o novo titulo:\n");
+          printf("-> ");
+          tc_canon_on();
+          char titulo[500];
+          scanf(" %[^\n]%*c", titulo);
+          tc_canon_off();
+          strcpy(aux->tarefa.titulo, titulo);
+          break;
+        case '2':
+          printf("%s%s", TC_BG_WHT, TC_BLK);
+          term_cls();
+          term_move_xy(1, 1);
+          printf("Deseja modificar para qual status:\n");
+          if (aux->tarefa.status == A_FAZER)
+          {
+            printf("1. Em andamento\n");
+            printf("2. Finalizada\n");
+            printf("-> ");
+            char ch;
+            ch = getchar();
+            switch (ch)
+            {
+            case '1':
+              aux->tarefa.status = ANDAMENTO;
+            case '2':
+              aux->tarefa.status = FINALIZADO;
+            default:
+              break;
+            }
+          }
+          else if (aux->tarefa.status == ANDAMENTO)
+          {
+            printf("1. A Fazer\n");
+            printf("2. Finalizada\n");
+            printf("-> ");
+            char ch;
+            ch = getchar();
+            switch (ch)
+            {
+            case '1':
+              aux->tarefa.status = A_FAZER;
+            case '2':
+              aux->tarefa.status = FINALIZADO;
+            default:
+              break;
+            }
+          }
+          else
+          {
+            printf("1. A Fazer\n");
+            printf("2. Em Andamento\n");
+            printf("-> ");
+            char ch;
+            ch = getchar();
+            switch (ch)
+            {
+            case '1':
+              aux->tarefa.status = A_FAZER;
+            case '2':
+              aux->tarefa.status = ANDAMENTO;
+            default:
+              break;
+            }
+          }
+        default:
+          break;
+        }
+        if (aux)
+        {
+          term_cls();
+          term_move_xy(1, 1);
+          printf("Edição Realizada com Sucesso!\n");
+          sleep(1);
+          return;
+        }
+      }
+    }
+  }
+}
+
 void deletarTarefa(ListaTarefa *lista)
 {
   if (!lista->primeiro)
@@ -127,7 +266,7 @@ void deletarTarefa(ListaTarefa *lista)
       printf("%s%s", TC_BG_WHT, TC_BLK);
       term_cls();
       term_move_xy(1, 1);
-      printf("\nQual destas tarefas você deseja deletar:\n");
+      printf("Qual destas tarefas você deseja deletar:\n");
       exibirLista(lista);
       printf("Q - Sair\n");
       printf("->");
@@ -149,7 +288,7 @@ void deletarTarefa(ListaTarefa *lista)
       {
         term_cls();
         term_move_xy(1, 1);
-        printf("\nEssa Tarefa nao Existe!\n");
+        printf("Essa Tarefa nao Existe!\n");
         sleep(2);
       }
       else if (aux == lista->primeiro)
@@ -189,7 +328,7 @@ void deletarTarefa(ListaTarefa *lista)
       {
         term_cls();
         term_move_xy(1, 1);
-        printf("\nTarefa Deletada com Sucesso!\n");
+        printf("Tarefa Deletada com Sucesso!\n");
         sleep(1);
         return;
       }
@@ -222,7 +361,7 @@ void menuGerenciarTarefas()
       criarNovaTarefa(&lista);
       break;
     case '2':
-      // Editar tarefa
+      editarTarefa(&lista);
       break;
     case '3':
       deletarTarefa(&lista);
