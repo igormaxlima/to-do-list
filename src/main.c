@@ -57,6 +57,7 @@ int main()
   tc_canon_off();
   menu_principal();
 
+  liberarMemoria(&lista);
   return 0;
 
 } // main*/

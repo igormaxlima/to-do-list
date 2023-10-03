@@ -48,3 +48,27 @@ void inserirFim(ListaTarefa *lista, NoTarefa *no)
     lista->ultimo = no;
   }
 }
+
+void liberarMemoria(ListaTarefa *lista)
+{
+
+  if (!lista)
+  {
+    fprintf(stderr, "Lista inválida.\n");
+    return;
+  }
+
+  if (!lista->primeiro)
+  {
+    return;
+  }
+
+  NoTarefa *aux = lista->primeiro;
+  while (aux)
+  {
+    NoTarefa *prox = aux->proximo;
+    free(aux);
+    lista->size--;
+    aux = prox;
+  }
+}

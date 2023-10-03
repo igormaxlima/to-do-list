@@ -35,5 +35,6 @@ ListaTarefa inicializarLista();
 Tarefa inicializarTarefa(int id, ETarefa status, char *titulo);
 NoTarefa *criarNo(Tarefa tarefa);
 void inserirFim(ListaTarefa *lista, NoTarefa *no);
+void liberarMemoria(ListaTarefa *lista);
 
 #endif
