@@ -1,2 +1,0 @@
-1;comprar agua;0;
-2;comprar leite;1;

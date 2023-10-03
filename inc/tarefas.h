@@ -32,9 +32,8 @@ typedef struct
 extern ListaTarefa lista;
 
 ListaTarefa inicializarLista();
-Tarefa inicializarTarefa(int id, char *titulo);
+Tarefa inicializarTarefa(int id, ETarefa status, char *titulo);
 NoTarefa *criarNo(Tarefa tarefa);
 void inserirFim(ListaTarefa *lista, NoTarefa *no);
-
 
 #endif
