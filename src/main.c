@@ -26,6 +26,7 @@ void menu_tarefas()
 
 void menu_principal()
 {
+  carregarTarefas(&lista, "tarefas.bin");
   // term_move_xy(5,8);
   char ch;
   while (1)
@@ -57,7 +58,6 @@ void menu_principal()
 
 int main()
 {
-
   tc_canon_off();
   menu_principal();
 

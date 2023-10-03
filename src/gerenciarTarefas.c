@@ -17,55 +17,26 @@ void criarNovaTarefa(ListaTarefa *lista)
   char titulo[500];
   scanf(" %[^\n]%*c", titulo);
   tc_canon_off();
+  int status = A_FAZER;
+  Tarefa tarefa = inicializarTarefa(lista->size, status, titulo);
 
-  char ch;
-  while (1)
+  NoTarefa *novo_no = criarNo(tarefa);
+  if (!novo_no)
   {
+    fprintf(stderr, "Error ao Criar Tarefa!\n");
+    return;
+  }
 
-    printf("Qual status da sua tarefa?\n");
-    printf("0 - A fazer\n");
-    printf("1 - Em andamento\n");
-    printf("2 - Finalizada\n");
-    printf("q = Sair.\n");
-    ch = getchar();
-
-    if (ch == 'q' || ch == 'Q')
-      return;
-    ETarefa status = -1;
-    switch (ch)
-    {
-    case '0':
-      status = A_FAZER;
-      break;
-    case '1':
-      status = ANDAMENTO;
-      break;
-    case '2':
-      status = FINALIZADO;
-      break;
-      // default: opção ínválida
-    }
-    Tarefa tarefa = inicializarTarefa(lista->size, status, titulo);
-
-    NoTarefa *novo_no = criarNo(tarefa);
-    if (!novo_no)
-    {
-      fprintf(stderr, "Error ao Criar Tarefa!\n");
-      return;
-    }
-
-    if (!lista->primeiro)
-    {
-      lista->primeiro = novo_no;
-      lista->ultimo = novo_no;
-    }
-    else
-    {
-      novo_no->anterior = lista->ultimo;
-      lista->ultimo->proximo = novo_no;
-      lista->ultimo = novo_no;
-    }
-    break;
+  if (!lista->primeiro)
+  {
+    lista->primeiro = novo_no;
+    lista->ultimo = novo_no;
+  }
+  else
+  {
+    novo_no->anterior = lista->ultimo;
+    lista->ultimo->proximo = novo_no;
+    lista->ultimo = novo_no;
   }
 }
 
@@ -243,7 +214,9 @@ void editarTarefa(ListaTarefa *lista)
               sleep(1);
               return;
             }
-          } else {
+          }
+          else
+          {
             printf("1. A Fazer\n");
             printf("2. Em Andamento\n");
             printf("3. Finalizada\n");
@@ -258,15 +231,15 @@ void editarTarefa(ListaTarefa *lista)
             case '2':
               aux->tarefa.status = ANDAMENTO;
               break;
-            case '3': 
+            case '3':
               aux->tarefa.status = FINALIZADO;
-              break;  
+              break;
             default:
               printf("\nStatus nao existente\n");
               sleep(1);
               return;
             }
-           }
+          }
           break;
         default:
           printf("\nOpção não existente!\n");
@@ -391,7 +364,10 @@ void menuGerenciarTarefas()
     printf("Opção: ");
     ch = getchar();
     if (ch == 'q' || ch == 'Q')
+    {
+      salvarTarefas("tarefas.bin");
       break;
+    }
 
     switch (ch)
     {
@@ -407,4 +383,56 @@ void menuGerenciarTarefas()
       // default: opção ínválida
     }
   }
+}
+
+void salvarTarefas(char *nomeArquivo)
+{
+  FILE *fp = fopen(nomeArquivo, "wb");
+  if (!fp)
+  {
+    fprintf(stderr, "Error ao abrir arquivo.\n");
+    return;
+  }
+  NoTarefa *aux = lista.primeiro;
+  while (aux)
+  {
+    fwrite(&aux->tarefa, sizeof(Tarefa), 1, fp);
+    aux = aux->proximo;
+  }
+  fclose(fp);
+}
+
+void carregarTarefas(ListaTarefa *lista, char *nomeArquivo)
+{
+  FILE *fp = fopen(nomeArquivo, "r");
+  if (!fp)
+  {
+    fprintf(stderr, "Error ao abrir arquivo.\n");
+    return;
+  }
+  Tarefa tarefa;
+  while (!feof(fp))
+  {
+    fread(&tarefa, sizeof(Tarefa), 1, fp);
+    NoTarefa *novo_no = criarNo(tarefa);
+    if (!novo_no)
+    {
+      fprintf(stderr, "Error ao Criar Tarefa!\n");
+      return;
+    }
+
+    if (!lista->primeiro)
+    {
+      lista->primeiro = novo_no;
+      lista->ultimo = novo_no;
+    }
+    else
+    {
+      novo_no->anterior = lista->ultimo;
+      lista->ultimo->proximo = novo_no;
+      lista->ultimo = novo_no;
+    }
+    lista->size++;
+  }
+  fclose(fp);
 }
