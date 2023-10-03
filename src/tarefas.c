@@ -13,11 +13,11 @@ ListaTarefa inicializarLista()
   return lista;
 }
 
-Tarefa inicializarTarefa(int id, ETarefa status, char *titulo)
+Tarefa inicializarTarefa(int id, char *titulo)
 {
   Tarefa tarefa;
   tarefa.id = id;
-  tarefa.status = status;
+  tarefa.status = A_FAZER;
   strcpy(tarefa.titulo, titulo);
   return tarefa;
 }
@@ -47,4 +47,5 @@ void inserirFim(ListaTarefa *lista, NoTarefa *no)
     lista->ultimo->proximo = no;
     lista->ultimo = no;
   }
+
 }

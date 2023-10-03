@@ -30,6 +30,7 @@ void criarNovaTarefa(ListaTarefa *lista)
   inserirFim(lista, novo_no);
 }
 
+
 void exibirLista(ListaTarefa *lista)
 {
   if (!lista)
@@ -93,6 +94,9 @@ void editarTarefa(ListaTarefa *lista)
       printf("Q - Sair\n");
       printf("->");
       tc_canon_on();
+      
+      // Recebe como parâmetro a lista e edita pelo id, resgatado internamente.
+
       int idEditar;
       scanf("%d", &idEditar);
       tc_canon_off();
@@ -372,6 +376,7 @@ void menuGerenciarTarefas()
       break;
       // default: opção ínválida
     }
+    
   }
 }
 
