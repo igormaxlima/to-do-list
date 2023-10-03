@@ -18,34 +18,8 @@ void criarNovaTarefa(ListaTarefa *lista)
   scanf(" %[^\n]%*c", titulo);
   tc_canon_off();
 
-  char ch;
-  while (1)
-  {
 
-    printf("Qual status da sua tarefa?\n");
-    printf("0 - A fazer\n");
-    printf("1 - Em andamento\n");
-    printf("2 - Finalizada\n");
-    printf("q = Sair.\n");
-    ch = getchar();
-
-    if (ch == 'q' || ch == 'Q')
-      return;
-    ETarefa status = -1;
-    switch (ch)
-    {
-    case '0':
-      status = A_FAZER;
-      break;
-    case '1':
-      status = ANDAMENTO;
-      break;
-    case '2':
-      status = FINALIZADO;
-      break;
-      // default: opção ínválida
-    }
-    Tarefa tarefa = inicializarTarefa(lista->size, status, titulo);
+    Tarefa tarefa = inicializarTarefa(lista->size, titulo);
 
     NoTarefa *novo_no = criarNo(tarefa);
     if (!novo_no)
@@ -65,9 +39,8 @@ void criarNovaTarefa(ListaTarefa *lista)
       lista->ultimo->proximo = novo_no;
       lista->ultimo = novo_no;
     }
-    break;
+
   }
-}
 
 void exibirLista(ListaTarefa *lista)
 {
@@ -132,6 +105,9 @@ void editarTarefa(ListaTarefa *lista)
       printf("Q - Sair\n");
       printf("->");
       tc_canon_on();
+      
+      // Recebe como parâmetro a lista e edita pelo id, resgatado internamente.
+
       int idEditar;
       scanf("%d", &idEditar);
       tc_canon_off();
@@ -391,6 +367,7 @@ void menuGerenciarTarefas()
     printf("Opção: ");
     ch = getchar();
     if (ch == 'q' || ch == 'Q')
+/*       salvarProjeto(&lista, "tarefas.txt"); */
       break;
 
     switch (ch)
@@ -406,5 +383,8 @@ void menuGerenciarTarefas()
       break;
       // default: opção ínválida
     }
+    
   }
+  salvarProjeto(&lista, "tarefas.txt");
 }
+

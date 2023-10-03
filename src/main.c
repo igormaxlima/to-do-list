@@ -16,6 +16,7 @@ void exibir_creditos()
 void exibirGerenciarTarefas()
 {
   term_cls();
+  carregarTarefas(&lista, "tarefas.txt");
   menuGerenciarTarefas();
   getchar();
 }
