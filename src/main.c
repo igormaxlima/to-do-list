@@ -16,7 +16,6 @@ void exibir_creditos()
 void exibirGerenciarTarefas()
 {
   term_cls();
-  carregarTarefas(&lista, "tarefas.txt");
   menuGerenciarTarefas();
   getchar();
 }
@@ -27,7 +26,7 @@ void menu_tarefas()
 
 void menu_principal()
 {
-  // term_move_xy(5,8);
+  carregarTarefas(&lista, "tarefas.txt");
   char ch;
   while (1)
   {

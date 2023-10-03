@@ -367,7 +367,6 @@ void menuGerenciarTarefas()
     printf("Opção: ");
     ch = getchar();
     if (ch == 'q' || ch == 'Q')
-/*       salvarProjeto(&lista, "tarefas.txt"); */
       break;
 
     switch (ch)
