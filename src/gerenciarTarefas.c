@@ -27,17 +27,7 @@ void criarNovaTarefa(ListaTarefa *lista)
     return;
   }
 
-  if (!lista->primeiro)
-  {
-    lista->primeiro = novo_no;
-    lista->ultimo = novo_no;
-  }
-  else
-  {
-    novo_no->anterior = lista->ultimo;
-    lista->ultimo->proximo = novo_no;
-    lista->ultimo = novo_no;
-  }
+  inserirFim(lista, novo_no);
 }
 
 void exibirLista(ListaTarefa *lista)
@@ -404,34 +394,24 @@ void salvarTarefas(char *nomeArquivo)
 
 void carregarTarefas(ListaTarefa *lista, char *nomeArquivo)
 {
-  FILE *fp = fopen(nomeArquivo, "r");
+  FILE *fp = fopen(nomeArquivo, "rb");
   if (!fp)
   {
-    fprintf(stderr, "Error ao abrir arquivo.\n");
+    fprintf(stderr, "Erro ao abrir arquivo.\n");
     return;
   }
   Tarefa tarefa;
-  while (!feof(fp))
+  while (fread(&tarefa, sizeof(Tarefa), 1, fp) == 1) // Verifique se a leitura foi bem-sucedida
   {
-    fread(&tarefa, sizeof(Tarefa), 1, fp);
     NoTarefa *novo_no = criarNo(tarefa);
     if (!novo_no)
     {
-      fprintf(stderr, "Error ao Criar Tarefa!\n");
+      fprintf(stderr, "Erro ao criar nó da tarefa!\n");
+      fclose(fp); // Certifique-se de fechar o arquivo antes de retornar
       return;
     }
 
-    if (!lista->primeiro)
-    {
-      lista->primeiro = novo_no;
-      lista->ultimo = novo_no;
-    }
-    else
-    {
-      novo_no->anterior = lista->ultimo;
-      lista->ultimo->proximo = novo_no;
-      lista->ultimo = novo_no;
-    }
+    inserirFim(lista, novo_no);
     lista->size++;
   }
   fclose(fp);

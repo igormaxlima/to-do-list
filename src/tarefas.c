@@ -33,3 +33,18 @@ NoTarefa *criarNo(Tarefa tarefa)
   }
   return novo_no;
 }
+
+void inserirFim(ListaTarefa *lista, NoTarefa *no)
+{
+  if (!lista->primeiro)
+  {
+    lista->primeiro = no;
+    lista->ultimo = no;
+  }
+  else
+  {
+    no->anterior = lista->ultimo;
+    lista->ultimo->proximo = no;
+    lista->ultimo = no;
+  }
+}

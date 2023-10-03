@@ -20,10 +20,6 @@ void exibirGerenciarTarefas()
   getchar();
 }
 
-void menu_tarefas()
-{
-}
-
 void menu_principal()
 {
   carregarTarefas(&lista, "tarefas.bin");
